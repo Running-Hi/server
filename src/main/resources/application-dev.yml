@@ -1,2 +1,42 @@
-greeting:
-  msg: this is dev
+logging:
+  level:
+    org:
+      apache:
+        coyote:
+          http11: debug
+
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: root
+    password: root
+    # JPA 설정
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        order_inserts: true
+        order_updates: true
+        format_sql: true
+  security:
+    oauth2.client:
+      registration:
+        kakao:
+          clientId: 'aee0c6f32442cc8c051d8af23b39e6f3'
+          clientSecret: 'u0sLsIewQNoOnhnyPcdPxSMHkhb427ke'
+          clientAuthenticationMethod: post
+          authorizationGrantType: authorization_code
+          redirectUri: "http://localhost:8080/login/oauth2/code/kakao"
+          scope:
+            - account_email
+          clientName: Kakao
+      provider:
+        kakao:
+          authorizationUri: https://kauth.kakao.com/oauth/authorize
+          tokenUri: https://kauth.kakao.com/oauth/token
+          userInfoUri: https://kapi.kakao.com/v2/user/me
+          userNameAttribute: id
