@@ -8,9 +8,14 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Table(name="users")
 public class User {
+    public User(Role role, String providerId, String provider) {
+        this.role = role;
+        this.providerId = providerId;
+        this.provider = provider;
+    }
+
     @Id
     @Column(name = "id",unique=true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +24,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(name = "email", unique = true, nullable = false)
-    private String email;
+    @Column(name = "provider_id", unique = false, nullable = false)
+    private String providerId;
 
     @Column(name = "provider", unique = false, nullable = false)
     private String provider;
