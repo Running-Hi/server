@@ -1,4 +1,4 @@
-package com.fourpeople.runninghi.oauth.filter;
+package com.fourpeople.runninghi.oauth.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourpeople.runninghi.config.auth.JWTManager;

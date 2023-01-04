@@ -5,6 +5,7 @@ import com.fourpeople.runninghi.common.utils.ApiUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -17,8 +18,9 @@ import static com.fourpeople.runninghi.common.utils.ApiUtils.error;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class OAuthAuthenticationEntryPoint implements AuthenticationEntryPoint {
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
     @Override
     public void commence(
             HttpServletRequest request,
@@ -34,6 +36,6 @@ public class OAuthAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
         response.getWriter()
                 .write(objectMapper.writeValueAsString(
-                        error(authException.getMessage(), HttpStatus.UNAUTHORIZED)));
+                        error((String) request.getAttribute("errorMessage"), HttpStatus.UNAUTHORIZED)));
     }
 }

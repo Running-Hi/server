@@ -11,9 +11,8 @@ import lombok.*;
 @ToString
 public class OAuthAccessToken {
     @JsonProperty("access_token")
+    @NonNull
     private String accessToken;
-    @JsonProperty("provider")
-    private String provider;
     @JsonIgnore
     private static final String PREFIX = "Bearer ";
     @JsonIgnore
