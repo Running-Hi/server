@@ -1,8 +1,6 @@
 package com.fourpeople.runninghi.common.utils;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 public class ApiUtils {
@@ -17,9 +15,10 @@ public class ApiUtils {
     }
 
     @Getter
+    @NoArgsConstructor
     public static class ApiError {
-        private final String message;
-        private final int status;
+        private String message;
+        private int status;
 
         ApiError(Throwable throwable, HttpStatus status) {
             this(throwable.getMessage(), status);
@@ -33,10 +32,11 @@ public class ApiUtils {
 
     @Getter
     @Setter
-    @RequiredArgsConstructor
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class ApiResult<T> {
-        private final boolean success;
-        private final T response;
-        private final ApiError error;
+        private boolean success;
+        private T response;
+        private  ApiError error;
     }
 }
