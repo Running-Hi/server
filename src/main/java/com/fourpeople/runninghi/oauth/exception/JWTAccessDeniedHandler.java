@@ -37,6 +37,5 @@ public class JWTAccessDeniedHandler implements AccessDeniedHandler {
         response.getWriter()
                 .write(objectMapper.writeValueAsString(
                         error((String) request.getAttribute("errorMessage"), HttpStatus.UNAUTHORIZED)));
-
     }
 }

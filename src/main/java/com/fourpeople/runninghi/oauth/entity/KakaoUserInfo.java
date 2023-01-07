@@ -10,9 +10,11 @@ import lombok.*;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown=true)
 @ToString
-public class KakaoAccount {
-    @JsonProperty("email")
-    private String email;
-    @JsonProperty("has_email")
-    private Boolean hasEmail;
+public class KakaoUserInfo {
+    @JsonProperty("id")
+    private String id;
+    @JsonProperty("connected_at")
+    private String connectedAt;
+    @JsonProperty("kakao_account")
+    private KakaoAccount kakaoAccount;
 }

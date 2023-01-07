@@ -44,7 +44,7 @@ class OAuthController {
     @Test
     @DisplayName("성공: 카카오 OAuth 로그인")
     void SUCCESS_KAKAO_OAUTH_LOGIN() throws Exception {
-        KakaoAccount kakaoAccount = new KakaoAccount("tmddn645@naver.com");
+        KakaoAccount kakaoAccount = new KakaoAccount("tmddn645@naver.com",true);
         ObjectMapper objectMapper = new ObjectMapper();
 
         doReturn(exchange)
