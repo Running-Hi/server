@@ -17,6 +17,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,8 +33,8 @@ import java.io.IOException;
 @Component
 public class OAuthAccessTokenAuthenticationFilter extends OncePerRequestFilter {
     private final RestTemplate restTemplate;
-    private final String REQUEST_RESOURCE_SERVER_URL = "https://kapi.kakao.com/v2/user/me";
-    private final String URI = "/oauth/signin/kakao";
+    private static final String REQUEST_RESOURCE_SERVER_URL = "https://kapi.kakao.com/v2/user/me";
+    private static final String URI = "/oauth/signin/kakao";
     private final ObjectMapper objectMapper;
 
     @Override
@@ -52,7 +53,7 @@ public class OAuthAccessTokenAuthenticationFilter extends OncePerRequestFilter {
             ResponseEntity<KakaoUserInfo> exchange = restTemplate.exchange(REQUEST_RESOURCE_SERVER_URL, HttpMethod.GET, new HttpEntity<>(httpHeaders), KakaoUserInfo.class);
             KakaoUserInfo body = exchange.getBody();
 
-            log.info("KakaoAccount: {}", body);
+            log.info("KakaoUserInfo: {}", body);
             SecurityContext emptyContext = SecurityContextHolder.createEmptyContext();
             emptyContext.setAuthentication(UsernamePasswordAuthenticationToken.authenticated(body.getKakaoAccount().getEmail(), null, null));
             SecurityContextHolder.setContext(emptyContext);

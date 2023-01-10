@@ -34,6 +34,7 @@ public class ApiUtils {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
+    @ToString
     public static class ApiResult<T> {
         private boolean success;
         private T response;

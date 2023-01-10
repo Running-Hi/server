@@ -28,13 +28,14 @@ class JWTAccessDeniedHandlerTest {
         MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
         MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse();
         AccessDeniedException accessDeniedException = new AccessDeniedException("");
+
         ObjectMapper objectMapper = new ObjectMapper();
 
         jwtAccessDeniedHandler.handle(mockHttpServletRequest,mockHttpServletResponse,accessDeniedException);
 
         ApiUtils.ApiResult apiResult = objectMapper.readValue(mockHttpServletResponse.getContentAsString(), ApiUtils.ApiResult.class);
 
-        assertThat(HttpServletResponse.SC_UNAUTHORIZED).isEqualTo(mockHttpServletResponse.getStatus());
+        assertThat(HttpServletResponse.SC_FORBIDDEN).isEqualTo(mockHttpServletResponse.getStatus());
         assertThat(mockHttpServletResponse.getCharacterEncoding()).isEqualTo("utf-8");
 
         assertThat(apiResult.isSuccess()).isFalse();

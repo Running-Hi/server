@@ -1,6 +1,7 @@
 package com.fourpeople.runninghi.oauth.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public class SigninResponseDto {
     @JsonProperty("access_token")
     private String accessToken;
