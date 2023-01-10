@@ -33,24 +33,26 @@ dependencies {
 	implementation 'com.auth0:java-jwt:4.2.1'
 }
 
-tasks.named('test') {
+test {
 	finalizedBy jacocoTestReport
+
 	useJUnitPlatform()
 }
+
 
 jacocoTestReport {
 	dependsOn test
 
 	reports {
 		xml.required = true
-		html.required = true
+		html.required = false
 		csv.required = false
 	}
-
-	finalizedBy jacocoTestCoverageVerification
 }
 
 jacocoTestCoverageVerification {
+	dependsOn jacocoTestReport
+
 	violationRules {
 		rule {
 			enabled = true
@@ -60,8 +62,18 @@ jacocoTestCoverageVerification {
 			limit {
 				counter = 'LINE'
 				value = 'COVEREDRATIO'
-				minimum = 0.10
+				minimum = 0.80
 			}
+
+			excludes = [
+			        '**.utils.*',
+					'**.entity.*',
+					'**.dto.*',
+					'**.repository.*',
+					'**.RunningHiApplication',
+					'**.*Config',
+					'**.auth.*'
+			]
 		}
 	}
 }
