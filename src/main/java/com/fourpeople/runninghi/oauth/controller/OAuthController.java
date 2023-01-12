@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,13 +22,10 @@ public class OAuthController {
     private final OAuthService oAuthService;
 
     @PostMapping("/signin/kakao")
-    public ResponseEntity<ApiResult<?>> signin() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = (String) authentication.getPrincipal();
+    public ResponseEntity<ApiResult<?>> signin(@AuthenticationPrincipal String providerId) {
+        log.info("providerId: {}", providerId);
 
-        log.info("OAuthController: {}", email);
-
-        return new ResponseEntity<>(oAuthService.signin(email), HttpStatus.OK);
+        return new ResponseEntity<>(oAuthService.signin(providerId), HttpStatus.OK);
     }
 
     @GetMapping("/test")

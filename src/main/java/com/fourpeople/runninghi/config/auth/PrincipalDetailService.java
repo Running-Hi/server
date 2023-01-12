@@ -13,8 +13,8 @@ public class PrincipalDetailService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByProviderId(email)
+    public UserDetails loadUserByUsername(String providerId) throws UsernameNotFoundException {
+        return userRepository.findByProviderId(providerId)
                 .map(PrincipalDetails::new)
                 .orElse(null);
     }

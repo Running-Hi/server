@@ -15,8 +15,8 @@ import static com.fourpeople.runninghi.common.utils.ApiUtils.success;
 @RequiredArgsConstructor
 public class OAuthService {
     private final UserRepository userRepository;
-    public ApiResult<?> signin(String email) {
-        return success(userRepository.findByProviderId(email)
+    public ApiResult<?> signin(String providerId) {
+        return success(userRepository.findByProviderId(providerId)
                 .map((user) -> JWTManager.makeUserBothToken(new PrincipalDetails(user)))
                 .orElse(JWTManager.makeGuestBothToken()));
     }

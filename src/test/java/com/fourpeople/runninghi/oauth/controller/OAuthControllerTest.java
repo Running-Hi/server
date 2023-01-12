@@ -2,7 +2,6 @@ package com.fourpeople.runninghi.oauth.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourpeople.runninghi.config.auth.JWTManager;
-import com.fourpeople.runninghi.oauth.entity.KakaoAccount;
 import com.fourpeople.runninghi.oauth.entity.KakaoUserInfo;
 import com.fourpeople.runninghi.oauth.entity.OAuthAccessToken;
 import com.fourpeople.runninghi.oauth.service.OAuthService;
@@ -23,14 +22,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
 
 import static com.fourpeople.runninghi.common.utils.ApiUtils.success;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
@@ -44,16 +41,15 @@ class OAuthControllerTest {
     private RestTemplate restTemplate;
     @MockBean
     private ResponseEntity<KakaoUserInfo> exchange;
-    private String dummyString = "123";
-    private Boolean dummyBool = true;
 
     @Autowired
     ApplicationContext applicationContext;
     @Test
     @DisplayName("성공: 카카오 OAuth 로그인")
     void SUCCESS_KAKAO_OAUTH_LOGIN() throws Exception {
-        KakaoAccount kakaoAccount = new KakaoAccount(dummyString, dummyBool);
-        KakaoUserInfo kakaoUserInfo = new KakaoUserInfo(dummyString, dummyString, kakaoAccount);
+        String dummyProviderId = "123123";
+
+        KakaoUserInfo kakaoUserInfo = new KakaoUserInfo(dummyProviderId);
         ObjectMapper objectMapper = new ObjectMapper();
 
         doReturn(exchange)
@@ -65,7 +61,7 @@ class OAuthControllerTest {
 
         mockMvc.perform(post("/oauth/signin/kakao")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(new OAuthAccessToken(dummyString))))
+                        .content(objectMapper.writeValueAsString(new OAuthAccessToken(dummyProviderId))))
 
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

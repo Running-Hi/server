@@ -40,7 +40,7 @@ class OAuthAuthenticationEntryPointTest {
 
         ApiUtils.ApiResult apiResult = objectMapper.readValue(mockHttpServletResponse.getContentAsString(), ApiUtils.ApiResult.class);
 
-        assertThat(HttpServletResponse.SC_UNAUTHORIZED).isEqualTo(mockHttpServletResponse.getStatus());
+        assertThat(mockHttpServletResponse.getStatus()).isEqualTo(HttpServletResponse.SC_UNAUTHORIZED);
         assertThat(mockHttpServletResponse.getCharacterEncoding()).isEqualTo("utf-8");
 
         assertThat(apiResult.isSuccess()).isFalse();

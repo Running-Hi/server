@@ -2,7 +2,10 @@ package com.fourpeople.runninghi.user.entity;
 
 import com.fourpeople.runninghi.oauth.entity.Role;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter

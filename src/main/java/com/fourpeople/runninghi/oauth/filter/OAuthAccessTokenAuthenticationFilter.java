@@ -1,8 +1,6 @@
 package com.fourpeople.runninghi.oauth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.exc.MismatchedInputException;
-import com.fourpeople.runninghi.oauth.entity.KakaoAccount;
 import com.fourpeople.runninghi.oauth.entity.KakaoUserInfo;
 import com.fourpeople.runninghi.oauth.entity.OAuthAccessToken;
 import jakarta.servlet.FilterChain;
@@ -15,14 +13,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -54,8 +48,9 @@ public class OAuthAccessTokenAuthenticationFilter extends OncePerRequestFilter {
             KakaoUserInfo body = exchange.getBody();
 
             log.info("KakaoUserInfo: {}", body);
+
             SecurityContext emptyContext = SecurityContextHolder.createEmptyContext();
-            emptyContext.setAuthentication(UsernamePasswordAuthenticationToken.authenticated(body.getKakaoAccount().getEmail(), null, null));
+            emptyContext.setAuthentication(UsernamePasswordAuthenticationToken.authenticated(body.getId(), null, null));
             SecurityContextHolder.setContext(emptyContext);
 
             filterChain.doFilter(request, response);
