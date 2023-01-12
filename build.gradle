@@ -21,7 +21,6 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
@@ -29,11 +28,14 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-webflux'
 	testImplementation 'org.springframework.security:spring-security-test'
+	implementation 'com.auth0:java-jwt:4.2.1'
 }
 
-tasks.named('test') {
+test {
 	finalizedBy jacocoTestReport
+
 	useJUnitPlatform()
 }
 
@@ -42,14 +44,14 @@ jacocoTestReport {
 
 	reports {
 		xml.required = true
-		html.required = true
+		html.required = false
 		csv.required = false
 	}
-
-	finalizedBy jacocoTestCoverageVerification
 }
 
 jacocoTestCoverageVerification {
+	dependsOn jacocoTestReport
+
 	violationRules {
 		rule {
 			enabled = true
@@ -59,8 +61,18 @@ jacocoTestCoverageVerification {
 			limit {
 				counter = 'LINE'
 				value = 'COVEREDRATIO'
-				minimum = 0.10
+				minimum = 0.80
 			}
+
+			excludes = [
+			        '**.utils.*',
+					'**.entity.*',
+					'**.dto.*',
+					'**.repository.*',
+					'**.RunningHiApplication',
+					'**.*Config',
+					'**.auth.*'
+			]
 		}
 	}
 }
