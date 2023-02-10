@@ -18,7 +18,7 @@ import static com.fourpeople.runninghi.common.utils.ApiUtils.error;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class JWTAccessDeniedHandler implements AccessDeniedHandler {
+public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     private final ObjectMapper objectMapper;
     @Override
     public void handle(

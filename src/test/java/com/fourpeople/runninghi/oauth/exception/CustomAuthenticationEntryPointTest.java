@@ -3,30 +3,25 @@ package com.fourpeople.runninghi.oauth.exception;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fourpeople.runninghi.common.utils.ApiUtils;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletResponse;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.util.ContentCachingResponseWrapper;
 
-import java.io.DataInput;
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class OAuthAuthenticationEntryPointTest {
+class CustomAuthenticationEntryPointTest {
 
-    private OAuthAuthenticationEntryPoint oAuthAuthenticationEntryPoint;
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @BeforeEach
     void setUp() {
-        oAuthAuthenticationEntryPoint = new OAuthAuthenticationEntryPoint(new ObjectMapper());
+        customAuthenticationEntryPoint = new CustomAuthenticationEntryPoint(new ObjectMapper());
     }
 
     @Test
@@ -36,7 +31,7 @@ class OAuthAuthenticationEntryPointTest {
         AuthenticationException ex = new AuthenticationCredentialsNotFoundException("");
         ObjectMapper objectMapper = new ObjectMapper();
 
-        oAuthAuthenticationEntryPoint.commence(mockHttpServletRequest,mockHttpServletResponse,ex);
+        customAuthenticationEntryPoint.commence(mockHttpServletRequest,mockHttpServletResponse,ex);
 
         ApiUtils.ApiResult apiResult = objectMapper.readValue(mockHttpServletResponse.getContentAsString(), ApiUtils.ApiResult.class);
 

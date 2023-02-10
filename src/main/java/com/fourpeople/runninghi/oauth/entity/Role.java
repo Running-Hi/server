@@ -20,4 +20,9 @@ public enum Role {
                 .findAny()
                 .orElse(GUEST);
     }
+
+    public static Boolean isOneOfRole(String code) {
+        return Arrays.stream(Role.values())
+                .anyMatch(c -> c.getCode().equals(code));
+    }
 }

@@ -1,7 +1,6 @@
 package com.fourpeople.runninghi.oauth.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fourpeople.runninghi.common.utils.ApiUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,8 +18,9 @@ import static com.fourpeople.runninghi.common.utils.ApiUtils.error;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class OAuthAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
     private final ObjectMapper objectMapper;
+
     @Override
     public void commence(
             HttpServletRequest request,

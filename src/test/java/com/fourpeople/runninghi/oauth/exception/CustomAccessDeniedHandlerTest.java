@@ -14,13 +14,13 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class JWTAccessDeniedHandlerTest {
+class CustomAccessDeniedHandlerTest {
 
-    private JWTAccessDeniedHandler jwtAccessDeniedHandler;
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @BeforeEach
     void setUp() {
-        jwtAccessDeniedHandler = new JWTAccessDeniedHandler(new ObjectMapper());
+        customAccessDeniedHandler = new CustomAccessDeniedHandler(new ObjectMapper());
     }
 
     @Test
@@ -31,7 +31,7 @@ class JWTAccessDeniedHandlerTest {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        jwtAccessDeniedHandler.handle(mockHttpServletRequest,mockHttpServletResponse,accessDeniedException);
+        customAccessDeniedHandler.handle(mockHttpServletRequest,mockHttpServletResponse,accessDeniedException);
 
         ApiUtils.ApiResult apiResult = objectMapper.readValue(mockHttpServletResponse.getContentAsString(), ApiUtils.ApiResult.class);
 
